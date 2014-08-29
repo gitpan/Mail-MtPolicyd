@@ -1,0 +1,23 @@
+==================================================
+Changes from 2013-08-29 00:00:00 +0000 to present.
+==================================================
+
+-----------------------------------------
+version 1.11 at 2014-08-29 14:40:56 +0000
+-----------------------------------------
+
+  Change: 948c9396559703ef826d89a3788cb91a42c9907f
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-08-29 16:40:01 +0000
+
+    adjust dist.ini repository configuration 
+
+  Change: 76e5017c9282fd7c7a4aa242f36cf784a27ce677
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-08-29 16:32:56 +0000
+
+    -initial checkin 
+
+================
+End of releases.
+================

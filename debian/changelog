@@ -1,0 +1,6 @@
+mtpolicyd (1.11) stable; urgency=low
+  * adjust dist.ini repository configuration 
+  * -initial checkin 
+
+ -- Markus Benning <ich@markusbenning.de>  Fri, 29 Aug 2014 16:40:01 +0000
+
