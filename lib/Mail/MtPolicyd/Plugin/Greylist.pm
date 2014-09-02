@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Greylist;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: mtpolicyd plugin for checking the client-address against an RBL
 
 extends 'Mail::MtPolicyd::Plugin';
@@ -256,7 +256,7 @@ Mail::MtPolicyd::Plugin::Greylist - mtpolicyd plugin for checking the client-add
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

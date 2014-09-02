@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::Response;
 
 use Moose;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: a postfix policyd client response class
 
 
@@ -60,7 +60,7 @@ Mail::MtPolicyd::Client::Response - a postfix policyd client response class
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

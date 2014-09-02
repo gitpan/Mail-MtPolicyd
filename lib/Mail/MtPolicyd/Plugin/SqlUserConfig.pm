@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::SqlUserConfig;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: mtpolicyd plugin for retrieving the user config of a user
 
 extends 'Mail::MtPolicyd::Plugin';
@@ -75,7 +75,7 @@ Mail::MtPolicyd::Plugin::SqlUserConfig - mtpolicyd plugin for retrieving the use
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

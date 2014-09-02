@@ -1,7 +1,7 @@
 %define module_name Mail-MtPolicyd
 
 Name: mtpolicyd
-Version: 1.11
+Version: 1.12
 Release: %(date +%Y%m%d)%{dist}
 Summary: the Mailteam policy daemon for postfix
 
@@ -20,6 +20,7 @@ Source0: %{module_name}-%{version}.tar.gz
 # only require core dependencies
 AutoReq: 0
 Requires: perl(Cache::Memcached), perl(Config::General), perl(Moose), perl(Tie::IxHash), perl(Time::HiRes), perl(DBI), perl(Mail::RBL), perl(JSON)
+BuildRequires: perl, perl(ExtUtils::MakeMaker)
 
 %description
 the Mailteam policy daemon for postfix
@@ -78,10 +79,10 @@ fi
 %files
 %defattr(-,root,root)
 %doc README
-%attr(755,-,-) %{_bindir}/mtpolicyd
-%attr(755,-,-) %{_bindir}/policyd-client
-%attr(755,-,-) %{_sysconfdir}/rc.d/init.d/mtpolicyd
-%attr(640,-,mtpolicyd) %config(noreplace) %{_sysconfdir}/mtpolicyd/mtpolicyd.conf
+%attr(755,root,root) %{_bindir}/mtpolicyd
+%attr(755,root,root) %{_bindir}/policyd-client
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/mtpolicyd
+%attr(640,root,mtpolicyd) %config(noreplace) %{_sysconfdir}/mtpolicyd/mtpolicyd.conf
 %attr(750,mtpolicyd,mtpolicyd) %dir /var/run/mtpolicyd
 %{perl_vendorlib}
 %{_mandir}/man1/*

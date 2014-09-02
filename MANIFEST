@@ -6,6 +6,7 @@ META.json
 META.yml
 Makefile.PL
 README
+README.md
 bin/mtpolicyd
 bin/policyd-client
 debian/changelog
@@ -34,17 +35,20 @@ lib/Mail/MtPolicyd/Plugin/ClearFields.pm
 lib/Mail/MtPolicyd/Plugin/Condition.pm
 lib/Mail/MtPolicyd/Plugin/CtIpRep.pm
 lib/Mail/MtPolicyd/Plugin/DBL.pm
+lib/Mail/MtPolicyd/Plugin/Eval.pm
 lib/Mail/MtPolicyd/Plugin/Fail2Ban.pm
 lib/Mail/MtPolicyd/Plugin/GeoIPAction.pm
 lib/Mail/MtPolicyd/Plugin/GeoIPLookup.pm
 lib/Mail/MtPolicyd/Plugin/Greylist.pm
 lib/Mail/MtPolicyd/Plugin/PostfixMap.pm
+lib/Mail/MtPolicyd/Plugin/Proxy.pm
 lib/Mail/MtPolicyd/Plugin/RBL.pm
 lib/Mail/MtPolicyd/Plugin/RBLAction.pm
 lib/Mail/MtPolicyd/Plugin/Result.pm
 lib/Mail/MtPolicyd/Plugin/Role/PluginChain.pm
 lib/Mail/MtPolicyd/Plugin/Role/Scoring.pm
 lib/Mail/MtPolicyd/Plugin/Role/UserConfig.pm
+lib/Mail/MtPolicyd/Plugin/SPF.pm
 lib/Mail/MtPolicyd/Plugin/ScoreAction.pm
 lib/Mail/MtPolicyd/Plugin/SetField.pm
 lib/Mail/MtPolicyd/Plugin/SqlList.pm
@@ -64,6 +68,7 @@ t/plugin-ctiprep.t
 t/plugin-dbl.t
 t/plugin-postfixmap.t
 t/plugin-rbl.t
+t/plugin-spf.t
 t/plugin-sqllist.t
 t/plugin-sqluserconfig.t
 t/release-pod-syntax.t

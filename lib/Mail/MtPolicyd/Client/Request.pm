@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::Request;
 
 use Moose;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: a postfix policyd client request class
 
 
@@ -52,6 +52,20 @@ sub new_from_fh {
         return $obj;
 }
 
+sub new_proxy_request {
+        my ( $class, $r ) = ( shift, shift );
+	my %attr = %{$r->attributes};
+	delete($attr{'type'});
+	delete($attr{'instance'});
+
+        my $obj = $class->new(
+                'type' => $r->type,
+                'instance' => $r->attr('instance'),
+                'attributes' => \%attr,
+        );
+        return $obj;
+}
+
 1;
 
 
@@ -64,7 +78,7 @@ Mail::MtPolicyd::Client::Request - a postfix policyd client request class
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

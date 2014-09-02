@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Action;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: mtpolicyd plugin which just returns an action
 
 
@@ -36,7 +36,7 @@ Mail::MtPolicyd::Plugin::Action - mtpolicyd plugin which just returns an action
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

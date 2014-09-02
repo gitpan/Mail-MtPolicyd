@@ -3,7 +3,7 @@ package Mail::MtPolicyd;
 use strict;
 use base qw(Net::Server::PreFork);
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: the Mailteam policy daemon for postfix
 
 use Data::Dumper;
@@ -470,7 +470,7 @@ Mail::MtPolicyd - the Mailteam policy daemon for postfix
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 DESCRIPTION
 

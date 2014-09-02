@@ -41,6 +41,7 @@
             "JSON" : "0",
             "LWP::UserAgent" : "0",
             "Mail::RBL" : "0",
+            "Mail::SPF" : "0",
             "Moose" : "0",
             "Moose::Role" : "0",
             "MooseX::Getopt" : "0",
@@ -77,6 +78,6 @@
          "web" : "https://github.com/benningm/mtpolicyd.git"
       }
    },
-   "version" : "1.11"
+   "version" : "1.12"
 }
 

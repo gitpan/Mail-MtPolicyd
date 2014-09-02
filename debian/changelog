@@ -1,4 +1,13 @@
-mtpolicyd (1.11) stable; urgency=low
+mtpolicyd (1.12) stable; urgency=low
+  * added SPF module 
+  * add Proxy and Eval plugin module 
+  * some adjustments for package builds 
+  * Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+  * Create README.md 
+
+ -- Markus Benning <ich@markusbenning.de>  Tue,  2 Sep 2014 14:43:18 +0000
+
+mtpolicyd (v1.11) stable; urgency=low
   * adjust dist.ini repository configuration 
   * -initial checkin 
 

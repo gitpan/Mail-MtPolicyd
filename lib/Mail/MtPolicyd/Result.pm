@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Result;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.11'; # VERSION
+our $VERSION = '1.12'; # VERSION
 # ABSTRACT: class to hold the results of a request returned by plugins
 
 has 'plugin_results' => (
@@ -53,7 +53,7 @@ Mail::MtPolicyd::Result - class to hold the results of a request returned by plu
 
 =head1 VERSION
 
-version 1.11
+version 1.12
 
 =head1 AUTHOR
 

@@ -1,9 +1,43 @@
 ==================================================
-Changes from 2013-08-29 00:00:00 +0000 to present.
+Changes from 2013-09-02 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 1.11 at 2014-08-29 14:40:56 +0000
+version 1.12 at 2014-09-02 12:45:04 +0000
+-----------------------------------------
+
+  Change: 050422c9079462f8113951d32a2165eb46df4226
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-02 14:43:18 +0000
+
+    added SPF module 
+
+  Change: 69ead7cb0d5d5e6962d17c96eaca00e82631a86b
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-02 13:15:24 +0000
+
+    add Proxy and Eval plugin module 
+
+  Change: 8b4ee9920d792ca3c0cbbd15f2c4dd9206612712
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-02 12:34:30 +0000
+
+    some adjustments for package builds 
+
+  Change: 7522ecceffbb1b0ec71f1cc3a09a7866feefcde0
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-08-29 16:41:41 +0000
+
+    Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+
+  Change: 9c4c8d717609fe5c95be0ef2fe3b16ad0e707150
+  Author: Markus Benning <me@w3r3wolf.de>
+  Date : 2014-08-29 16:35:17 +0000
+
+    Create README.md 
+
+-----------------------------------------
+version 1.11 at 2014-08-29 14:40:01 +0000
 -----------------------------------------
 
   Change: 948c9396559703ef826d89a3788cb91a42c9907f

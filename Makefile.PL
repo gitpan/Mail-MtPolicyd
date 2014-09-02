@@ -39,6 +39,7 @@ my %WriteMakefileArgs = (
     "JSON" => 0,
     "LWP::UserAgent" => 0,
     "Mail::RBL" => 0,
+    "Mail::SPF" => 0,
     "Moose" => 0,
     "Moose::Role" => 0,
     "MooseX::Getopt" => 0,
@@ -59,7 +60,7 @@ my %WriteMakefileArgs = (
     "Test::MockObject" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.11",
+  "VERSION" => "1.12",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -83,6 +84,7 @@ my %FallbackPrereqs = (
   "JSON" => 0,
   "LWP::UserAgent" => 0,
   "Mail::RBL" => 0,
+  "Mail::SPF" => 0,
   "Moose" => 0,
   "Moose::Role" => 0,
   "MooseX::Getopt" => 0,
