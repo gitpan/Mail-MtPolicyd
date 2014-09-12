@@ -1,9 +1,109 @@
 ==================================================
-Changes from 2013-09-02 00:00:00 +0000 to present.
+Changes from 2013-09-12 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 1.12 at 2014-09-02 12:45:04 +0000
+version 1.13 at 2014-09-12 13:18:52 +0000
+-----------------------------------------
+
+  Change: 73ddd965229601998aa115dfde820c5c3389a8ad
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-12 15:18:04 +0000
+
+    fix naming error in DBL module helo -> helo_name 
+
+  Change: 811c6841bba8bb1ec59e6f193080cc9738098466
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-12 15:09:36 +0000
+
+    check for empty sender in SPF plugin make helo optional 
+
+  Change: 61304eb99d508273a46572992226b68095f94ecc
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-12 14:57:35 +0000
+
+    fix same parsing error in 2 different places 
+
+  Change: 01a20c8674281a3ed22ec7c243e0fcb181a10ad5
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-12 14:55:41 +0000
+
+    fix parsing of response. (only split at first = ) 
+
+  Change: cd7b9c353957fe42eab1f75e97b909dea7e5617f
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-10 15:59:41 +0000
+
+    Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+
+  Change: d49f71c444ffc410eafd353c12896e321dee1fba
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-10 15:58:33 +0000
+
+    added Honeypot plugin 
+
+  Change: b4182c51d9699b3f874373441ce5f20a297e0c9d
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-09 20:31:48 +0000
+
+    fix typo 
+
+  Change: 6e5273d4eef25e75dca440fb577d0e5eacdb4397
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-09 20:17:55 +0000
+
+    more docs 
+
+  Change: 50a4368bd385caa67f46e5ec5e7d62459e032e18
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-09 18:58:09 +0000
+
+    Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+
+  Change: 48ddec546b351a71598afa99d4d699c447e59ffd
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-09 18:56:42 +0000
+
+    doc update 
+
+  Change: 1f49b0b954e6c81d1d5f10111caa97dce5a00fc4
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-09 18:50:36 +0000
+
+    more docs 
+
+  Change: a5b176557cd168a4548104212523ad4301e77354
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-08 18:18:28 +0000
+
+    more docs in Cookbook::Installation 
+
+  Change: e07416a072f7b14856ce23f6aae200f08e844792
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-05 18:42:09 +0000
+
+    added first parts of a mtpolicyd Cookbook 
+
+  Change: 9bdaa08d06e12587ac0c4f02cfd5f3d3e71c2ed4
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-04 16:04:20 +0000
+
+    some adjustments for SLES rpm build 
+
+  Change: 1aa171cd9d9871474ea8b23756a221fe7280e164
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-03 16:03:27 +0000
+
+    made parameter "mode" user configurable in most modules 
+
+  Change: 03f30cc3266255b98d890b6baa858de3b97d3d82
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-02 15:48:41 +0000
+
+    add some options to the default configuration 
+
+-----------------------------------------
+version 1.12 at 2014-09-02 12:43:18 +0000
 -----------------------------------------
 
   Change: 050422c9079462f8113951d32a2165eb46df4226

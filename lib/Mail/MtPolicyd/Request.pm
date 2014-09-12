@@ -5,7 +5,7 @@ use namespace::autoclean;
 
 use Mail::MtPolicyd::Plugin::Result;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: the request object
 
 
@@ -57,7 +57,7 @@ sub new_from_fh {
 	while( defined( $line = $fh->getline ) ) {
 		$line =~ s/\r?\n$//;
 		if( $line eq '') { $complete = 1 ; last; }
-		my ( $name, $value ) = split('=', $line);
+		my ( $name, $value ) = split('=', $line, 2);
 		if( ! defined $value ) {
 			die('error parsing request');
 		}
@@ -124,7 +124,7 @@ Mail::MtPolicyd::Request - the request object
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 ATTRIBUTES
 
@@ -164,6 +164,28 @@ Returns an string to dump the content of a request.
 
 An object constructor for creating an request object with the content read
 for the supplied filehandle $fh.
+
+Will die if am error ocours:
+
+=over
+
+=item error parsing request
+
+A line in the request could not be parsed.
+
+=item while reading request: <io-error>
+
+The filehandle had an error while reading the request.
+
+=item connection closed by peer
+
+Connection has been closed while reading the request.
+
+=item could not parse request
+
+The client did not send a complete request.
+
+=back
 
 =head2 do_cached( $key, $sub )
 

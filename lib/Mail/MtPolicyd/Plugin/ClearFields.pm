@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::ClearFields;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: mtpolicyd plugin to unset session variables
 
 
@@ -68,7 +68,7 @@ Mail::MtPolicyd::Plugin::ClearFields - mtpolicyd plugin to unset session variabl
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 

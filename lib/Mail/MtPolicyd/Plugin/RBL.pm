@@ -3,14 +3,14 @@ package Mail::MtPolicyd::Plugin::RBL;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: mtpolicyd plugin for checking the client-address against an RBL
 
 
 extends 'Mail::MtPolicyd::Plugin';
 with 'Mail::MtPolicyd::Plugin::Role::Scoring';
 with 'Mail::MtPolicyd::Plugin::Role::UserConfig' => {
-	'uc_attributes' => [ 'enabled' ],
+	'uc_attributes' => [ 'enabled', 'mode' ],
 };
 
 use Mail::MtPolicyd::Plugin::Result;
@@ -41,8 +41,9 @@ sub run {
 	my ( $self, $r ) = @_;
 	my $ip = $r->attr('client_address');
 	my $session = $r->session;
-
+	my $mode = $self->get_uc( $session, 'mode' );
 	my $enabled = $self->get_uc( $session, 'enabled' );
+
 	if( $enabled eq 'off' ) {
 		return;
 	}
@@ -59,13 +60,13 @@ sub run {
 		$self->add_score($r, $self->name => $self->score);
 	}
 
-	if( $self->mode eq 'reject' ) {
+	if( $mode eq 'reject' ) {
 		return Mail::MtPolicyd::Plugin::Result->new(
 			action => $self->_get_reject_action($ip, $info),
 			abort => 1,
 		);
 	}
-	if( $self->mode eq 'accept' ) {
+	if( $mode eq 'accept' ) {
 		return Mail::MtPolicyd::Plugin::Result->new_dunno;
 	}
 
@@ -98,7 +99,7 @@ Mail::MtPolicyd::Plugin::RBL - mtpolicyd plugin for checking the client-address 
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 
@@ -116,7 +117,7 @@ The domain of the blacklist to query.
 
 Enable/disable this check.
 
-=item mode (default: reject)
+=item (uc_)mode (default: reject)
 
 =over
 

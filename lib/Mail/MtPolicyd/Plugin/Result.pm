@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Result;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: result returned by a plugin
 
 has 'action' => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -52,7 +52,7 @@ Mail::MtPolicyd::Plugin::Result - result returned by a plugin
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 AUTHOR
 

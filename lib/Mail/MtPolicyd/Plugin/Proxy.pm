@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Proxy;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: mtpolicyd plugin to forward request to another policy daemon
 
 
@@ -62,7 +62,7 @@ Mail::MtPolicyd::Plugin::Proxy - mtpolicyd plugin to forward request to another 
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 

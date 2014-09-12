@@ -1,5 +1,5 @@
 {
-   "abstract" : "the Mailteam policy daemon for postfix",
+   "abstract" : "a modular policy daemon for postfix",
    "author" : [
       "Markus Benning <ich@markusbenning.de>"
    ],
@@ -78,6 +78,6 @@
          "web" : "https://github.com/benningm/mtpolicyd.git"
       }
    },
-   "version" : "1.12"
+   "version" : "1.13"
 }
 

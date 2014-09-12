@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Condition;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: mtpolicyd plugin for conditions based on session values
 
 extends 'Mail::MtPolicyd::Plugin';
@@ -100,7 +100,7 @@ Mail::MtPolicyd::Plugin::Condition - mtpolicyd plugin for conditions based on se
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 

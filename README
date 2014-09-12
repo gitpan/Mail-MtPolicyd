@@ -1,9 +1,9 @@
 
 
 This archive contains the distribution Mail-MtPolicyd,
-version 1.12:
+version 1.13:
 
-  the Mailteam policy daemon for postfix
+  a modular policy daemon for postfix
 
 This software is Copyright (c) 2014 by Markus Benning <ich@markusbenning.de>.
 

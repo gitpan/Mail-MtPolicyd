@@ -1,0 +1,44 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Tue,  2 Sep 2014 14:43:18 +0000
+Source: mtpolicyd
+Binary: mtpolicyd
+Architecture: source
+Version: 1.12
+Distribution: stable
+Urgency: low
+Maintainer: Markus Benning <ich@markusbenning.de>
+Changed-By: Markus Benning <ich@markusbenning.de>
+Description: 
+ mtpolicyd  - the Mailteam policy daemon for postfix
+Changes: 
+ mtpolicyd (1.12) stable; urgency=low
+ .
+   * added SPF module
+   * add Proxy and Eval plugin module
+   * some adjustments for package builds
+   * Merge branch 'master' of https://github.com/benningm/mtpolicyd
+   * Create README.md
+Checksums-Sha1: 
+ ab32387b59d1009b98af9e91570b88cec3e55415 1393 mtpolicyd_1.12.dsc
+ d6c03f8a84dc481cfecf339158a7dd38b070bb74 47664 mtpolicyd_1.12.tar.gz
+Checksums-Sha256: 
+ 6cb42a0f5ff0cf500c52bc16079e45954244437bb71ceff431fcc4e18bba8287 1393 mtpolicyd_1.12.dsc
+ 971978e38b3c01589f4422e5bb4c9f77abe450e3242da6d893ddc465e19e8574 47664 mtpolicyd_1.12.tar.gz
+Files: 
+ 754d9b33baeade4c7b417c49a2baf9c6 1393 perl optional mtpolicyd_1.12.dsc
+ 889b4309b73522204e0f2ab9921c05bd 47664 perl optional mtpolicyd_1.12.tar.gz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUBbxSAAoJEAJYWDndCqpi7kUH/3CcNwKjI5BHKdkDKWWLYBto
+8CpdUPa6RORn14aEB9l5OXCpxOU6k1CculQRj1BG6swJgLPxilK0eTOggOrHxHkV
+y8TygwP0N3Qy8cbFlyELTsSQnwA6p6FESYzS73KigQpowAL0g0tDBg2EMTHXUCQp
+G6ob7b4PzesbTwc5zFE1G98vS0MW1nVqGBYDifj07J+adE/j7KP8BZMwrI/Mu6Io
+xHYjTAEwv/Z8FQjCkTJg9D6yEU1x969rEP2ugVBglTgZA+VFy0yJQ7qO65H3D9Sg
+F3JOIR6Y4WXI2eRlt2EAsu3XLBm3iAGynB/WsTv4ga8eLo3UWk89tXr+LNPXHS8=
+=OZHF
+-----END PGP SIGNATURE-----

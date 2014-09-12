@@ -1,4 +1,24 @@
-mtpolicyd (1.12) stable; urgency=low
+mtpolicyd (1.13) stable; urgency=low
+  * fix naming error in DBL module helo -> helo_name 
+  * check for empty sender in SPF plugin make helo optional 
+  * fix same parsing error in 2 different places 
+  * fix parsing of response. (only split at first = ) 
+  * Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+  * added Honeypot plugin 
+  * fix typo 
+  * more docs 
+  * Merge branch 'master' of https://github.com/benningm/mtpolicyd 
+  * doc update 
+  * more docs 
+  * more docs in Cookbook::Installation 
+  * added first parts of a mtpolicyd Cookbook 
+  * some adjustments for SLES rpm build 
+  * made parameter "mode" user configurable in most modules 
+  * add some options to the default configuration 
+
+ -- Markus Benning <ich@markusbenning.de>  Fri, 12 Sep 2014 15:18:04 +0000
+
+mtpolicyd (v1.12) stable; urgency=low
   * added SPF module 
   * add Proxy and Eval plugin module 
   * some adjustments for package builds 

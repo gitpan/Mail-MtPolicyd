@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "the Mailteam policy daemon for postfix",
+  "ABSTRACT" => "a modular policy daemon for postfix",
   "AUTHOR" => "Markus Benning <ich\@markusbenning.de>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -60,7 +60,7 @@ my %WriteMakefileArgs = (
     "Test::MockObject" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.12",
+  "VERSION" => "1.13",
   "test" => {
     "TESTS" => "t/*.t"
   }

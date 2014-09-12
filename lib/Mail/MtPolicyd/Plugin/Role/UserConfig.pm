@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Role::UserConfig;
 use strict; # make critic happy
 use MooseX::Role::Parameterized;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: role for plugins using per user/request configuration
 
 parameter uc_attributes => (
@@ -51,7 +51,7 @@ Mail::MtPolicyd::Plugin::Role::UserConfig - role for plugins using per user/requ
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 AUTHOR
 

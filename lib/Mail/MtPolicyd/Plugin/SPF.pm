@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::SPF;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: mtpolicyd plugin to apply SPF checks
 
 
@@ -11,7 +11,7 @@ extends 'Mail::MtPolicyd::Plugin';
 
 with 'Mail::MtPolicyd::Plugin::Role::Scoring';
 with 'Mail::MtPolicyd::Plugin::Role::UserConfig' => {
-	'uc_attributes' => [ 'enabled' ],
+	'uc_attributes' => [ 'enabled', 'fail_mode', 'pass_mode' ],
 };
 
 use Mail::MtPolicyd::Plugin::Result;
@@ -46,8 +46,10 @@ has '_spf' => ( is => 'ro', isa => 'Mail::SPF::Server', lazy => 1,
 sub run {
 	my ( $self, $r ) = @_;
 	my $session = $r->session;
-
+	my $fail_mode = $self->get_uc($session, 'fail_mode');
+	my $pass_mode = $self->get_uc($session, 'pass_mode');
 	my $enabled = $self->get_uc($session, 'enabled');
+
 	if( $enabled eq 'off' ) {
 		return;
 	}
@@ -56,15 +58,15 @@ sub run {
 	my $sender = $r->attr('sender');
 	my $helo = $r->attr('helo_name');
 
-	if( ! defined $ip || ! defined $sender || ! defined $helo ) {
-		$self->logdie('request atttributes client_address, sender, helo_name required!');
+	if( ! defined $ip || ! defined $sender || ! length($sender) ) {
+		die('request atttributes client_address, sender required!');
 	}
 
 	my $request = Mail::SPF::Request->new(
 		scope => 'mfrom',
 		identity => $sender,
 		ip_address  => $ip,
-		helo_identity => $helo,
+		defined $helo && length($helo) ? ( helo_identity => $helo ) : (),
 	);
 	my $result = $self->_spf->process($request);
 
@@ -76,7 +78,7 @@ sub run {
 		if( defined $self->fail_score && ! $r->is_already_done($self->name.'-score') ) {
 			$self->add_score( $r, $self->name => $self->fail_score );
 		}
-		if( $self->fail_mode eq 'reject') {
+		if( $fail_mode eq 'reject') {
 			return Mail::MtPolicyd::Plugin::Result->new(
 				action => $self->_get_reject_action($result),
 				abort => 1,
@@ -88,7 +90,7 @@ sub run {
 		if( defined $self->pass_score && ! $r->is_already_done($self->name.'-score') ) {
 			$self->add_score( $r, $self->name => $self->pass_score );
 		}
-		if( $self->pass_mode eq 'accept' || $self->pass_mode eq 'dunno') {
+		if( $pass_mode eq 'accept' || $pass_mode eq 'dunno') {
 			return Mail::MtPolicyd::Plugin::Result->new_dunno;
 		}
 		return;
@@ -131,7 +133,7 @@ Mail::MtPolicyd::Plugin::SPF - mtpolicyd plugin to apply SPF checks
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 
@@ -147,7 +149,7 @@ Checks are implemented using the Mail::SPF perl module.
 
 Enable/disable the plugin.
 
-=item pass_mode (default: passive)
+=item (uc_)pass_mode (default: passive)
 
 How to behave if the SPF checks passed successfully:
 
@@ -167,7 +169,7 @@ Will return an 'dunno' action.
 
 Score to apply when the sender has been successfully checked against SPF.
 
-=item fail_mode (default: reject)
+=item (uc_)fail_mode (default: reject)
 
 =over
 

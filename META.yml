@@ -1,5 +1,5 @@
 ---
-abstract: 'the Mailteam policy daemon for postfix'
+abstract: 'a modular policy daemon for postfix'
 author:
   - 'Markus Benning <ich@markusbenning.de>'
 build_requires:
@@ -49,4 +49,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Mail-MtPolicyd
   repository: https://github.com/benningm/mtpolicyd
-version: 1.12
+version: 1.13

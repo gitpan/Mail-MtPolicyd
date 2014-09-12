@@ -28,6 +28,10 @@ lib/Mail/MtPolicyd/Client.pm
 lib/Mail/MtPolicyd/Client/App.pm
 lib/Mail/MtPolicyd/Client/Request.pm
 lib/Mail/MtPolicyd/Client/Response.pm
+lib/Mail/MtPolicyd/Cookbook.pod
+lib/Mail/MtPolicyd/Cookbook/BasicPlugin.pod
+lib/Mail/MtPolicyd/Cookbook/ExtendedPlugin.pod
+lib/Mail/MtPolicyd/Cookbook/Installation.pod
 lib/Mail/MtPolicyd/Plugin.pm
 lib/Mail/MtPolicyd/Plugin/Action.pm
 lib/Mail/MtPolicyd/Plugin/AddScoreHeader.pm
@@ -40,6 +44,7 @@ lib/Mail/MtPolicyd/Plugin/Fail2Ban.pm
 lib/Mail/MtPolicyd/Plugin/GeoIPAction.pm
 lib/Mail/MtPolicyd/Plugin/GeoIPLookup.pm
 lib/Mail/MtPolicyd/Plugin/Greylist.pm
+lib/Mail/MtPolicyd/Plugin/Honeypot.pm
 lib/Mail/MtPolicyd/Plugin/PostfixMap.pm
 lib/Mail/MtPolicyd/Plugin/Proxy.pm
 lib/Mail/MtPolicyd/Plugin/RBL.pm
@@ -57,6 +62,9 @@ lib/Mail/MtPolicyd/PluginChain.pm
 lib/Mail/MtPolicyd/Request.pm
 lib/Mail/MtPolicyd/Result.pm
 lib/Mail/MtPolicyd/VirtualHost.pm
+mtpolicyd_1.12.dsc
+mtpolicyd_1.12.tar.gz
+mtpolicyd_1.12_source.changes
 rpm/mtpolicyd.init-redhat
 rpm/mtpolicyd.spec
 t-data/plugin-postfixmap-postmap

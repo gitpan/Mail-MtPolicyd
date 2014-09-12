@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::Response;
 
 use Moose;
 
-our $VERSION = '1.12'; # VERSION
+our $VERSION = '1.13'; # VERSION
 # ABSTRACT: a postfix policyd client response class
 
 
@@ -28,7 +28,7 @@ sub new_from_fh {
         while( my $line = $fh->getline ) {
                 $line =~ s/\r?\n$//;
                 if( $line eq '') { $complete = 1 ; last; }
-                my ( $name, $value ) = split('=', $line);
+                my ( $name, $value ) = split('=', $line, 2);
                 if( ! defined $value ) {
                         die('error parsing response');
                 }
@@ -60,7 +60,7 @@ Mail::MtPolicyd::Client::Response - a postfix policyd client response class
 
 =head1 VERSION
 
-version 1.12
+version 1.13
 
 =head1 DESCRIPTION
 
