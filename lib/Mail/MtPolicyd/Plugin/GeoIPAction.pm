@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::GeoIPAction;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: mtpolicyd plugin for checking geo information of an ip
 
 
@@ -105,7 +105,7 @@ Mail::MtPolicyd::Plugin::GeoIPAction - mtpolicyd plugin for checking geo informa
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 DESCRIPTION
 

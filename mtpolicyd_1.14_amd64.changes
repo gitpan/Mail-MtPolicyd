@@ -1,0 +1,36 @@
+Format: 1.8
+Date: Mon, 17 Nov 2014 10:32:22 +0000
+Source: mtpolicyd
+Binary: mtpolicyd
+Architecture: source all
+Version: 1.14
+Distribution: stable
+Urgency: low
+Maintainer: Markus Benning <ich@markusbenning.de>
+Changed-By: Markus Benning <ich@markusbenning.de>
+Description: 
+ mtpolicyd  - the Mailteam policy daemon for postfix
+Changes: 
+ mtpolicyd (1.14) stable; urgency=low
+ .
+   * Added infrastructur for profiling
+   This adds a application level profiling to mtpolicyd. Plugins may use
+     this via Mail::MtPolicyd::Profiler like
+   Mail::MtPolicyd::Profiler->tick('doing something');
+   # do something
+   Mail::MtPolicyd::Profiler->tick('finished something');
+   Timings are logged at log level 3.
+   * add honeypot config sample to default configuration
+   * add .editorconfig file
+Checksums-Sha1: 
+ 4f565270435d583286e32d918f7eb03462a59b04 881 mtpolicyd_1.14.dsc
+ 70de14ac473b390aa00713e9af464720f6c57cc7 56464 mtpolicyd_1.14.tar.gz
+ 7dfbfe0be350e8905aa37e6ee59532b7be9389ec 146772 mtpolicyd_1.14_all.deb
+Checksums-Sha256: 
+ 45281cf90bb80c44e1b31090c4b7b3505a60542adde941372305d472b4e3a26e 881 mtpolicyd_1.14.dsc
+ 8428bfe543ddb432d1f0109dbab73d4ecf69c5953891a4bbfd421dbcd0d58ff0 56464 mtpolicyd_1.14.tar.gz
+ 40123407bb821fce6e3e7bcc1947f070e78e75af72199cbf4decd5970c473aa9 146772 mtpolicyd_1.14_all.deb
+Files: 
+ e65dda8b87df88bfb969e2ba5b4e85f9 881 perl optional mtpolicyd_1.14.dsc
+ 14f0c09bea99de1388b149970df2a0a5 56464 perl optional mtpolicyd_1.14.tar.gz
+ 73f0c4b2303986d39d7d294b0f8be4d3 146772 perl optional mtpolicyd_1.14_all.deb

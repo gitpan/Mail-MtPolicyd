@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Plugin::Role::Scoring;
 
 use Moose::Role;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: role for plugins using scoring
 
 has 'score_field' => (
@@ -66,7 +66,7 @@ Mail::MtPolicyd::Plugin::Role::Scoring - role for plugins using scoring
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 AUTHOR
 

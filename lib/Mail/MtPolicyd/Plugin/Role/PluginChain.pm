@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Plugin::Role::PluginChain;
 
 use Moose::Role;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: role for plugins to support a nested plugin chain
 
 use Mail::MtPolicyd::PluginChain;
@@ -36,7 +36,7 @@ Mail::MtPolicyd::Plugin::Role::PluginChain - role for plugins to support a neste
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 AUTHOR
 

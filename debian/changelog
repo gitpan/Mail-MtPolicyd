@@ -1,3 +1,37 @@
+mtpolicyd (1.14) stable; urgency=low
+  * Small fixes
+  * fix declaration of @plugin_results inside of eval in PluginChain
+  * fix undefined $session in Plugin::Stress 
+  * Adjust documentation for on_error feature 
+  * Add on_error=continue feature to Plugins
+  Added attribute on_error to Plugin base class. If set to continue and
+    the plugin dies mtpolicyd will continue with processing instead of
+    returning an error.
+  <Plugin fault>
+  module = "Faulty"
+  on_error = "continue"
+  </Plugin>
+  If this plugin dies mtpolicyd will just log the plugins failure and
+    continure. 
+  * Small doc update
+  use blacklist.db instead of whitelist.db in blacklist example. 
+  * New Plugin: Stress
+  Added new plugin for postfix stress feature. 
+  * Small fixes
+  * fixed version string in dzil changelog generators
+  * fix stop -> stop_current_timer 
+  * Added infrastructur for profiling
+  This adds a application level profiling to mtpolicyd. Plugins may use
+    this via Mail::MtPolicyd::Profiler like
+  Mail::MtPolicyd::Profiler->tick('doing something');
+  # do something
+  Mail::MtPolicyd::Profiler->tick('finished something');
+  Timings are logged at log level 3. 
+  * add honeypot config sample to default configuration 
+  * add .editorconfig file 
+
+ -- Markus Benning <ich@markusbenning.de>  Fri, 28 Nov 2014 13:41:14 +0000
+
 mtpolicyd (1.13) stable; urgency=low
   * fix naming error in DBL module helo -> helo_name 
   * check for empty sender in SPF plugin make helo optional 
@@ -18,7 +52,7 @@ mtpolicyd (1.13) stable; urgency=low
 
  -- Markus Benning <ich@markusbenning.de>  Fri, 12 Sep 2014 15:18:04 +0000
 
-mtpolicyd (v1.12) stable; urgency=low
+mtpolicyd (1.12) stable; urgency=low
   * added SPF module 
   * add Proxy and Eval plugin module 
   * some adjustments for package builds 
@@ -27,7 +61,7 @@ mtpolicyd (v1.12) stable; urgency=low
 
  -- Markus Benning <ich@markusbenning.de>  Tue,  2 Sep 2014 14:43:18 +0000
 
-mtpolicyd (v1.11) stable; urgency=low
+mtpolicyd (1.11) stable; urgency=low
   * adjust dist.ini repository configuration 
   * -initial checkin 
 

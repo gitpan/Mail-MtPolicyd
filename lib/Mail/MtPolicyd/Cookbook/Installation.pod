@@ -11,7 +11,7 @@ Mail::MtPolicyd::Cookbook::Installation - How to install mtpolicyd
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 GET STARTED WITH BASIC MTPOLICYD INSTALLATION
 

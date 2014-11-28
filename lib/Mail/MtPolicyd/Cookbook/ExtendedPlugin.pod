@@ -11,7 +11,7 @@ Mail::MtPolicyd::Cookbook::ExtendedModule - how to archieve certain tasks within
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 Extending your mtpolicyd plugin
 

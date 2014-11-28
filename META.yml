@@ -37,6 +37,7 @@ requires:
   Moose::Role: 0
   MooseX::Getopt: 0
   MooseX::Role::Parameterized: 0
+  MooseX::Singleton: 0
   Net::Server::PreFork: 0
   Tie::IxHash: 0
   Time::HiRes: 0
@@ -49,4 +50,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Mail-MtPolicyd
   repository: https://github.com/benningm/mtpolicyd
-version: 1.13
+version: 1.14

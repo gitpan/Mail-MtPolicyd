@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::RBL;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: mtpolicyd plugin for checking the client-address against an RBL
 
 
@@ -99,7 +99,7 @@ Mail::MtPolicyd::Plugin::RBL - mtpolicyd plugin for checking the client-address 
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 DESCRIPTION
 

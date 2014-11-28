@@ -5,7 +5,7 @@ use namespace::autoclean;
 
 use Mail::MtPolicyd::Plugin::Result;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: the request object
 
 
@@ -124,7 +124,7 @@ Mail::MtPolicyd::Request - the request object
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 ATTRIBUTES
 

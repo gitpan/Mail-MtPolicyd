@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::PostfixMap;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: mtpolicyd plugin for accessing a postfix access map
 
 extends 'Mail::MtPolicyd::Plugin';
@@ -155,7 +155,7 @@ Mail::MtPolicyd::Plugin::PostfixMap - mtpolicyd plugin for accessing a postfix a
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 SYNOPSIS
 
@@ -167,7 +167,7 @@ version 1.13
 
   <Plugin blacklist>
     moduel="PostfixMap"
-    db_file="/etc/postfix/whitelist.db"
+    db_file="/etc/postfix/blacklist.db"
     match_action="reject you are blacklisted!"
   </Plugin>
 

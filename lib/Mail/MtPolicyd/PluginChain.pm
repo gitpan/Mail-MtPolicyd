@@ -3,9 +3,10 @@ package Mail::MtPolicyd::PluginChain;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: class for a VirtualHost instance
 
+use Mail::MtPolicyd::Profiler;
 use Mail::MtPolicyd::Result;
 
 has 'plugins' => (
@@ -30,7 +31,18 @@ sub run {
 
 	foreach my $plugin ( @{$self->plugins} ) {
 		my $abort = 0;
-		my @plugin_results = $plugin->run($r);
+        Mail::MtPolicyd::Profiler->new_timer('plugin '.$plugin->name);
+        my @plugin_results;
+        eval { @plugin_results = $plugin->run($r); };
+        my $e = $@;
+        if( $e ) {
+            my $msg = 'plugin '.$plugin->name.' failed: '.$e;
+            if( ! defined $plugin->on_error || $plugin->on_error ne 'continue' ) {
+                die($msg);
+            }
+            $r->log(0, $msg);
+        }
+        Mail::MtPolicyd::Profiler->stop_current_timer;
 		foreach my $plugin_result ( @plugin_results ) {
 			$result->add_plugin_result($plugin_result);
 			if( $plugin_result->abort ) {
@@ -107,7 +119,7 @@ Mail::MtPolicyd::PluginChain - class for a VirtualHost instance
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 AUTHOR
 

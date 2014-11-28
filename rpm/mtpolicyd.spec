@@ -1,7 +1,7 @@
 %define module_name Mail-MtPolicyd
 
 Name: mtpolicyd
-Version: 1.13
+Version: 1.14
 Release: %(date +%Y%m%d)%{dist}
 Summary: a modular policy daemon for postfix
 
@@ -19,7 +19,7 @@ Source0: %{module_name}-%{version}.tar.gz
 
 # only require core dependencies
 AutoReq: 0
-Requires: perl(Cache::Memcached), perl(Config::General), perl(Moose), perl(Tie::IxHash), perl(Time::HiRes), perl(DBI), perl(Mail::RBL), perl(JSON)
+Requires: perl(Cache::Memcached), perl(Config::General), perl(Moose), perl(Tie::IxHash), perl(Time::HiRes), perl(DBI), perl(Mail::RBL), perl(JSON), perl(MooseX::Singleton)
 BuildRequires: perl, perl(ExtUtils::MakeMaker)
 
 Requires(pre): /usr/sbin/useradd, /usr/sbin/groupadd

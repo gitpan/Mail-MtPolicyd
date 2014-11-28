@@ -1,9 +1,105 @@
 ==================================================
-Changes from 2013-09-12 00:00:00 +0000 to present.
+Changes from 2013-11-28 00:00:00 +0000 to present.
 ==================================================
 
 -----------------------------------------
-version 1.13 at 2014-09-12 13:18:52 +0000
+version 1.14 at 2014-11-28 12:42:50 +0000
+-----------------------------------------
+
+  Change: 2a8b15a7e7c6dd764bf141ee5492c4fec3e7a207
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-28 13:41:14 +0000
+
+    Small fixes
+
+    * fix declaration of @plugin_results inside of eval in PluginChain
+
+    * fix undefined $session in Plugin::Stress 
+
+  Change: ee12431e845d84ede9e69bddeace3d53227e0b69
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-28 13:36:12 +0000
+
+    Adjust documentation for on_error feature 
+
+  Change: 86ca31eee7089ab78b317adacfd81ddef04eb06e
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-28 13:20:32 +0000
+
+    Add on_error=continue feature to Plugins
+
+    Added attribute on_error to Plugin base class. If set to continue and
+    the plugin dies mtpolicyd will continue with processing instead of
+    returning an error.
+
+    <Plugin fault>
+
+    module = "Faulty"
+
+    on_error = "continue"
+
+    </Plugin>
+
+    If this plugin dies mtpolicyd will just log the plugins failure and
+    continure. 
+
+  Change: 52ca1f09675b97bf0b13b8bf727eb72bc9f233f7
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-20 14:02:08 +0000
+
+    Small doc update
+
+    use blacklist.db instead of whitelist.db in blacklist example. 
+
+  Change: f3ceb5809399c7137e9017a990b4a4137d13909d
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-20 13:58:46 +0000
+
+    New Plugin: Stress
+
+    Added new plugin for postfix stress feature. 
+
+  Change: 7a5508e97f15d714a8e23ca73b1eae463f2ddf2c
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-18 14:13:46 +0000
+
+    Small fixes
+
+    * fixed version string in dzil changelog generators
+
+    * fix stop -> stop_current_timer 
+
+  Change: afe9fc6bac1924c61d053d72354c123c63e8da18
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-11-17 10:32:22 +0000
+
+    Added infrastructur for profiling
+
+    This adds a application level profiling to mtpolicyd. Plugins may use
+    this via Mail::MtPolicyd::Profiler like
+
+    Mail::MtPolicyd::Profiler->tick('doing something');
+
+    # do something
+
+    Mail::MtPolicyd::Profiler->tick('finished something');
+
+    Timings are logged at log level 3. 
+
+  Change: 4b3b0c16891a6d25152b557167f7d54052996abe
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-15 15:03:19 +0000
+
+    add honeypot config sample to default configuration 
+
+  Change: e0d3d9af2fc4e2d8561b39b8f4e22dbe44348786
+  Author: Markus Benning <ich@markusbenning.de>
+  Date : 2014-09-15 07:27:54 +0000
+
+    add .editorconfig file 
+
+-----------------------------------------
+version 1.13 at 2014-09-12 13:18:04 +0000
 -----------------------------------------
 
   Change: 73ddd965229601998aa115dfde820c5c3389a8ad

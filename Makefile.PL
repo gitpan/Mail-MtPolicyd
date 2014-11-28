@@ -44,6 +44,7 @@ my %WriteMakefileArgs = (
     "Moose::Role" => 0,
     "MooseX::Getopt" => 0,
     "MooseX::Role::Parameterized" => 0,
+    "MooseX::Singleton" => 0,
     "Net::Server::PreFork" => 0,
     "Tie::IxHash" => 0,
     "Time::HiRes" => 0,
@@ -60,7 +61,7 @@ my %WriteMakefileArgs = (
     "Test::MockObject" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.13",
+  "VERSION" => "1.14",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -89,6 +90,7 @@ my %FallbackPrereqs = (
   "Moose::Role" => 0,
   "MooseX::Getopt" => 0,
   "MooseX::Role::Parameterized" => 0,
+  "MooseX::Singleton" => 0,
   "Net::Server::PreFork" => 0,
   "Test::Exception" => 0,
   "Test::MockObject" => 0,

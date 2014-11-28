@@ -46,6 +46,7 @@
             "Moose::Role" : "0",
             "MooseX::Getopt" : "0",
             "MooseX::Role::Parameterized" : "0",
+            "MooseX::Singleton" : "0",
             "Net::Server::PreFork" : "0",
             "Tie::IxHash" : "0",
             "Time::HiRes" : "0",
@@ -78,6 +79,6 @@
          "web" : "https://github.com/benningm/mtpolicyd.git"
       }
    },
-   "version" : "1.13"
+   "version" : "1.14"
 }
 

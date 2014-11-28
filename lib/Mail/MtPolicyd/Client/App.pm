@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::App;
 
 use Moose;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: application interface class for Mail::MtPolicyd::Client
 
 
@@ -78,7 +78,7 @@ Mail::MtPolicyd::Client::App - application interface class for Mail::MtPolicyd::
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 SYNOPSIS
 

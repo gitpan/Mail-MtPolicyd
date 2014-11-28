@@ -3,7 +3,7 @@ package Mail::MtPolicyd::VirtualHost;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.13'; # VERSION
+our $VERSION = '1.14'; # VERSION
 # ABSTRACT: class for a VirtualHost instance
 
 use Mail::MtPolicyd::PluginChain;
@@ -50,7 +50,7 @@ Mail::MtPolicyd::VirtualHost - class for a VirtualHost instance
 
 =head1 VERSION
 
-version 1.13
+version 1.14
 
 =head1 AUTHOR
 
