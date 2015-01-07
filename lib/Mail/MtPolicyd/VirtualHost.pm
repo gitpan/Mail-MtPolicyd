@@ -3,7 +3,7 @@ package Mail::MtPolicyd::VirtualHost;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: class for a VirtualHost instance
 
 use Mail::MtPolicyd::PluginChain;
@@ -36,13 +36,20 @@ sub new_from_config {
 	return $vhost;
 }
 
+sub cron {
+    my $self = shift;
+    return $self->chain->cron(@_);
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -50,7 +57,7 @@ Mail::MtPolicyd::VirtualHost - class for a VirtualHost instance
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 AUTHOR
 
@@ -65,4 +72,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

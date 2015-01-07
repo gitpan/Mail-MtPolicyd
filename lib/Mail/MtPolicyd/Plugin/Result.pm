@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Result;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: result returned by a plugin
 
 has 'action' => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -42,9 +42,11 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -52,7 +54,7 @@ Mail::MtPolicyd::Plugin::Result - result returned by a plugin
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 AUTHOR
 
@@ -67,4 +69,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

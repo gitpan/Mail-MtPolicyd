@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::App;
 
 use Moose;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: application interface class for Mail::MtPolicyd::Client
 
 
@@ -68,9 +68,11 @@ sub _dump {
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -78,7 +80,7 @@ Mail::MtPolicyd::Client::App - application interface class for Mail::MtPolicyd::
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 SYNOPSIS
 
@@ -108,4 +110,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

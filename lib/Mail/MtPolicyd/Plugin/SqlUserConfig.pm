@@ -3,10 +3,11 @@ package Mail::MtPolicyd::Plugin::SqlUserConfig;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: mtpolicyd plugin for retrieving the user config of a user
 
 extends 'Mail::MtPolicyd::Plugin';
+with 'Mail::MtPolicyd::Plugin::Role::SqlUtils';
 
 
 use Mail::MtPolicyd::Plugin::Result;
@@ -24,16 +25,19 @@ has '_json' => (
 	}
 );
 
+has 'field' => ( is => 'rw', isa => 'Str', default => 'recipient' );
+
 sub _get_config {
 	my ( $self, $r ) = @_;
-	my $rcpt = $r->attr('recipient');
+	my $key = $r->attr( $self->field );
+    if( ! defined $key || $key =~ /^\s*$/ ) {
+        die('key field '.$self->field.' not defined or empty in request');
+    }
 
-	my $dbh = $r->server->get_dbh;
-	my $sth = $dbh->prepare( $self->sql_query );
-	$sth->execute( $rcpt );
+	my $sth = $self->execute_sql( $self->sql_query, $key );
 	my ( $json ) = $sth->fetchrow_array;
 	if( ! defined $json ) {
-		die( 'no user-config found for '.$rcpt );
+		die( 'no user-config found for '.$key );
 	}
 	return $self->_json->decode( $json );
 }
@@ -41,11 +45,6 @@ sub _get_config {
 sub run {
 	my ( $self, $r ) = @_;
 	my $config;
-
-	if( ! defined $r->attr('recipient') ) {
-		$self->log($r, 'no attribute \'recipient\' in request');
-		return;
-	}
 
 	eval { $config = $self->_get_config($r) };
 	if( $@ ) {
@@ -65,9 +64,11 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -75,7 +76,7 @@ Mail::MtPolicyd::Plugin::SqlUserConfig - mtpolicyd plugin for retrieving the use
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 DESCRIPTION
 
@@ -93,6 +94,10 @@ This could be used to retrieve configuration values for users from a database.
 The SQL query to retrieve the JSON configuration string.
 
 The content of the first row/column is used.
+
+=item field (default: recipient)
+
+The request field used in the sql query to retrieve the user configuration.
 
 =back
 
@@ -141,4 +146,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

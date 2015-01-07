@@ -1,9 +1,11 @@
 # PODNAME: Mail::MtPolicyd::Cookbook::Installation
 # ABSTRACT: How to install mtpolicyd
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -11,7 +13,7 @@ Mail::MtPolicyd::Cookbook::Installation - How to install mtpolicyd
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 GET STARTED WITH BASIC MTPOLICYD INSTALLATION
 
@@ -124,4 +126,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

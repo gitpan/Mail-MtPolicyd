@@ -1,0 +1,50 @@
+Format: 1.8
+Date: Tue, 23 Dec 2014 13:31:59 +0000
+Source: mtpolicyd
+Binary: mtpolicyd
+Architecture: source all
+Version: 1.15
+Distribution: stable
+Urgency: low
+Maintainer: Markus Benning <ich@markusbenning.de>
+Changed-By: Markus Benning <ich@markusbenning.de>
+Description: 
+ mtpolicyd  - the Mailteam policy daemon for postfix
+Changes: 
+ mtpolicyd (1.15) stable; urgency=low
+ .
+   * Small fixes
+   * initialize SQL connection before plugins
+   * skip also emtpy or whitespace request attributes
+   * Added Accounting Plugin
+   * More SQL improvements
+   * add unit tests t/plugin-role-sqlutils.t t/sqlconnection.t
+   * add support for automatic table creation
+   Greylisting Plugin
+   * fix autowl expire
+   * add unit test for greylisting plugin
+   * Add some SQL infrastructure
+   * added Mail::MtPolicyd::SqlConnection singleton for storing DB
+   connnection
+   * added Plugin::Role::SqlUtils for code shared by plugins
+   * adjust existing plugins
+   * adjust tests
+   * Fix RBL test IP
+   * use XBL test IP instead of a real client IP
+   * Add cucumber test cases
+   * added basic step files for cucumber test
+   * add 2 basic server tests (minimal.conf and spamhaus-rbls.conf)
+   * Dont fail in SPF when sender/client_address unavailable
+   * fixed missing dependencies in debian package
+Checksums-Sha1: 
+ 88d32c7f75e51b0c6bb7b5b55c6df8e35633da73 1001 mtpolicyd_1.15.dsc
+ 869ddf64e7aaa36a4eab7e49f7fcbbfacc25999c 533128 mtpolicyd_1.15.tar.gz
+ daa51b6df844d39d13e197300457c319b4254f85 161046 mtpolicyd_1.15_all.deb
+Checksums-Sha256: 
+ 9cea61c56419f7037aeec0c1b20d52fcea89ec39f5713380262ded5b3f9b54c8 1001 mtpolicyd_1.15.dsc
+ 933a7f9d70a54feeaeb2b0bee595d5612ba91bab36ca02f72bc4d12c448eec0e 533128 mtpolicyd_1.15.tar.gz
+ f9c21a709cd49104bd30adc81eb86224499962041e42b5cd74dd02f3d6e6876d 161046 mtpolicyd_1.15_all.deb
+Files: 
+ 8ddbfe74b2ca3dcc71d716ec3e6b8cbb 1001 perl optional mtpolicyd_1.15.dsc
+ 4a5780d74df77752db05417428dd0529 533128 perl optional mtpolicyd_1.15.tar.gz
+ 5f498bdf65f4abee41f6b30797dec5a6 161046 perl optional mtpolicyd_1.15_all.deb

@@ -3,13 +3,14 @@ package Mail::MtPolicyd;
 use strict;
 use base qw(Net::Server::PreFork);
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: a modular policy daemon for postfix
 
 use Data::Dumper;
 use Mail::MtPolicyd::Profiler;
 use Mail::MtPolicyd::Request;
 use Mail::MtPolicyd::VirtualHost;
+use Mail::MtPolicyd::SqlConnection;
 use DBI;
 use Cache::Memcached;
 use Time::HiRes qw( usleep tv_interval gettimeofday );
@@ -71,7 +72,7 @@ sub _apply_array_from_config {
 }
 
 sub print_usage {
-	print "mtpolicyd [-h|--help] [-c|--config=<file>] [-f|--foreground] [-l|--loglevel=<level>] [-d|--dump_vhosts]\n";
+	print "mtpolicyd [-h|--help] [-c|--config=<file>] [-f|--foreground] [-l|--loglevel=<level>] [-d|--dump_vhosts] [-t|--cron=<task1,hourly,daily,...>]\n";
 	return;
 }
 
@@ -82,7 +83,9 @@ sub configure {
 	
 	return if(@_);
 
-	$server->{'config_file'} = '/etc/mtpolicyd/mtpolicyd.conf';
+    if( ! defined $server->{'config_file'} ) {
+   	    $server->{'config_file'} = '/etc/mtpolicyd/mtpolicyd.conf';
+    }
 	$server->{'background'} = 1;
 	$server->{'setsid'} = 1;
 	$server->{'no_close_by_child'} = 1;
@@ -90,12 +93,13 @@ sub configure {
         # Parse command line params
         %{$cmdline} = ();
         GetOptions(
-                        \%{$cmdline},
-                        "help|h",
-                        "dump_config|d",
-                        "config|c:s",
-                        "foreground|f",
-                        "loglevel|l:i",
+            \%{$cmdline},
+            "help|h",
+            "dump_config|d",
+            "config|c:s",
+            "foreground|f",
+            "loglevel|l:i",
+            "cron|t:s",
         );
         if ($cmdline->{'help'}) {
                 $self->print_usage;
@@ -110,11 +114,10 @@ sub configure {
 	}
 
 	# DEFAULTS
-	$server->{'user'} = 'nobody';
-	$server->{'group'} = 'nobody';
-
-	$server->{'log_level'} = 2;
-	if( ! $cmdline->{'foreground'} ) {
+    if( ! defined $server->{'log_level'} ) {
+	    $server->{'log_level'} = 2;
+    }
+	if( ! defined $server->{'log_file'} && ! $cmdline->{'foreground'} ) {
 		$server->{'log_file'} = 'Sys::Syslog';
 	}
 	$server->{'syslog_ident'} = 'mtpolicyd';
@@ -122,7 +125,9 @@ sub configure {
 
 	$server->{'proto'} = 'tcp';
 	$server->{'host'} = '127.0.0.1';
-	$server->{'port'} = [ '127.0.0.1:12345' ];
+    if( ! defined $server->{'port'} ) {
+    	$server->{'port'} = [ '127.0.0.1:12345' ];
+    }
 
 	$server->{'min_servers'} = 4;
         $server->{'min_spare_servers'} = 4;
@@ -178,6 +183,15 @@ sub configure {
 	);
 	$self->_apply_array_from_config($self, $config, 'memcached_servers');
 
+    # Initialize DB connection before load vhosts
+	if( defined $self->{'db_dsn'} && $self->{'db_dsn'} !~ /^\s*$/ ) {
+        Mail::MtPolicyd::SqlConnection->initialize(
+            dsn => $self->{'db_dsn'},
+            user => $self->{'db_user'},
+            password => $self->{'db_password'},
+        );
+	}
+
 	# LOAD VirtualHosts
 	if( ! defined $config->{'VirtualHost'} ) {
 		print(STDERR 'no virtual hosts configured!\n');
@@ -191,26 +205,40 @@ sub configure {
 		$self->{'virtual_hosts'}->{$vhost_port} = 
 			Mail::MtPolicyd::VirtualHost->new_from_config($vhost_port, $vhost)
 	}
-        if ($cmdline->{'dump_config'}) {
-		print "----- Virtual Hosts -----\n";
-		print Dumper( $self->{'virtual_hosts'} );
-                exit 0;
-        }
+    if ($cmdline->{'dump_config'}) {
+        print "----- Virtual Hosts -----\n";
+        print Dumper( $self->{'virtual_hosts'} );
+        exit 0;
+    }
 
 	# foreground mode (cmdline)
-        if ($cmdline->{'foreground'}) {
-		$server->{'background'} = undef;
-		$server->{'setsid'} = undef;
-        }
+    if ($cmdline->{'foreground'}) {
+        $server->{'background'} = undef;
+        $server->{'setsid'} = undef;
+    }
 	if( $cmdline->{'loglevel'} ) {
 		$server->{'log_level'} = $cmdline->{'loglevel'};
 	} 
 
+    # if running in cron mode execute cronjobs and exit
+    if( $cmdline->{'cron'} && $cmdline->{'cron'} !~ /^\s*$/ ) {
+        my @tasks = split(/\s*,\s*/, $cmdline->{'cron'});
+        $self->cron( @tasks );
+        exit 0;
+    }
 
 	# change processname in top/ps
 	$self->_set_process_stat('master');
 
 	return;
+}
+
+sub cron {
+    my $self = shift;
+    foreach my $vhost ( keys %{$self->{'virtual_hosts'}} ) {
+        $self->{'virtual_hosts'}->{$vhost}->cron( $self, @_ );
+    }
+    return;
 }
 
 sub pre_loop_hook {
@@ -226,15 +254,10 @@ sub child_init_hook {
 
 	$self->_set_process_stat('virgin child');
 
-	if( defined $self->{'db_dsn'} && $self->{'db_dsn'} !~ /^\s*$/ ) {
-		$self->{'dbh'} = DBI->connect($self->{'db_dsn'},
-			$self->{'db_user'}, $self->{'db_password'}, {
-				RaiseError => 1,
-				AutoCommit => 1,
-				mysql_auto_reconnect => 1,
-			},
-		);
-	}
+    # close parent database connection
+    if( Mail::MtPolicyd::SqlConnection->is_initialized ) {
+        Mail::MtPolicyd::SqlConnection->disconnect;
+    }
 
 	$self->{'memcached'} = Cache::Memcached->new( {
 		'servers' => $self->{'memcached_servers'},
@@ -249,9 +272,10 @@ sub child_finish_hook {
 	my $self = shift;
 	$self->_set_process_stat('finish');
 
-	if( defined $self->{'dbh'} ) {
-		$self->{'dbh'}->disconnect;
+	if( Mail::MtPolicyd::SqlConnection->is_initialized ) {
+		eval { Mail::MtPolicyd::SqlConnection->instance->disconnect };
 	}
+
 	return;
 }
 
@@ -345,10 +369,10 @@ sub get_virtual_host {
 
 sub get_dbh {
 	my $self = shift;
-	if( ! defined $self->{'dbh'} ) {
+	if( ! Mail::MtPolicyd::SqlConnection->is_initialized ) {
 		die('no database connection available (no configured?)');
 	}
-	return( $self->{'dbh'} );
+	return( Mail::MtPolicyd::SqlConnection->instance->dbh );
 }
 
 sub _is_loglevel {
@@ -465,9 +489,11 @@ sub _set_process_stat {
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -475,7 +501,7 @@ Mail::MtPolicyd - a modular policy daemon for postfix
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 DESCRIPTION
 
@@ -499,4 +525,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

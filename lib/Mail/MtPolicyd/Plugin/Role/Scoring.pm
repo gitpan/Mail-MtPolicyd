@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Plugin::Role::Scoring;
 
 use Moose::Role;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: role for plugins using scoring
 
 has 'score_field' => (
@@ -56,9 +56,11 @@ sub add_score {
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -66,7 +68,7 @@ Mail::MtPolicyd::Plugin::Role::Scoring - role for plugins using scoring
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 AUTHOR
 
@@ -81,4 +83,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

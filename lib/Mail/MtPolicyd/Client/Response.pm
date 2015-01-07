@@ -2,7 +2,7 @@ package Mail::MtPolicyd::Client::Response;
 
 use Moose;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: a postfix policyd client response class
 
 
@@ -50,9 +50,11 @@ sub new_from_fh {
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -60,7 +62,7 @@ Mail::MtPolicyd::Client::Response - a postfix policyd client response class
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 DESCRIPTION
 
@@ -123,4 +125,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

@@ -1,3 +1,42 @@
+mtpolicyd (1.15) stable; urgency=low
+  * Documentation updates
+  * added how to for Accounting/Quotas
+  * add section about cron() in Cookbook::ExtendedPlugin 
+  * Added Quota plugin
+  * new Plugin: Quota
+  * make field for SQL configurable in SqlUserConfig
+  * add tests for Quota to accounting test cases 
+  * Added support for cron tasks
+  * added a crontab to call mtpolicyd periodically
+  * add mtpolicyd --cron <tasks> to execute tasks
+  * plugins can do cron jobs by implementing a cron()
+  * added autowl expire to Plugin::Greylist based on cron() 
+  * Small fixes
+  * initialize SQL connection before plugins
+  * skip also emtpy or whitespace request attributes 
+  * Added Accounting Plugin 
+  * More SQL improvements
+  * add unit tests t/plugin-role-sqlutils.t t/sqlconnection.t
+  * add support for automatic table creation
+  Greylisting Plugin
+  * fix autowl expire
+  * add unit test for greylisting plugin 
+  * Add some SQL infrastructure
+  * added Mail::MtPolicyd::SqlConnection singleton for storing DB
+  connnection
+  * added Plugin::Role::SqlUtils for code shared by plugins
+  * adjust existing plugins
+  * adjust tests 
+  * Fix RBL test IP
+  * use XBL test IP instead of a real client IP 
+  * Add cucumber test cases
+  * added basic step files for cucumber test
+  * add 2 basic server tests (minimal.conf and spamhaus-rbls.conf) 
+  * Dont fail in SPF when sender/client_address unavailable 
+  * fixed missing dependencies in debian package 
+
+ -- Markus Benning <ich@markusbenning.de>  Wed,  7 Jan 2015 16:17:56 +0000
+
 mtpolicyd (1.14) stable; urgency=low
   * Small fixes
   * fix declaration of @plugin_results inside of eval in PluginChain

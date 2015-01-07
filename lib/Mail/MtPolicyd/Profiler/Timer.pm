@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Profiler::Timer;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: a profiler for the mtpolicyd
 
 use Time::HiRes 'gettimeofday', 'tv_interval';
@@ -74,9 +74,11 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -84,7 +86,7 @@ Mail::MtPolicyd::Profiler::Timer - a profiler for the mtpolicyd
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 AUTHOR
 
@@ -99,4 +101,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

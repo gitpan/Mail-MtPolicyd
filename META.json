@@ -4,7 +4,7 @@
       "Markus Benning <ich@markusbenning.de>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "gpl_2"
    ],
@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "develop" : {
@@ -50,7 +50,7 @@
             "Net::Server::PreFork" : "0",
             "Tie::IxHash" : "0",
             "Time::HiRes" : "0",
-            "Time::Piece::MySQL" : "0",
+            "Time::Piece" : "0",
             "Time::Seconds" : "0",
             "base" : "0",
             "namespace::autoclean" : "0",
@@ -61,6 +61,13 @@
       "test" : {
          "requires" : {
             "File::Find" : "0",
+            "File::ReadBackwards" : "0",
+            "File::Temp" : "0",
+            "IO::File" : "0",
+            "POSIX" : "0",
+            "Template" : "0",
+            "Test::BDD::Cucumber::Harness::TestBuilder" : "0",
+            "Test::BDD::Cucumber::Loader" : "0",
             "Test::Exception" : "0",
             "Test::MockObject" : "0",
             "Test::More" : "0"
@@ -79,6 +86,6 @@
          "web" : "https://github.com/benningm/mtpolicyd.git"
       }
    },
-   "version" : "1.14"
+   "version" : "1.15"
 }
 

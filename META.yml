@@ -4,13 +4,20 @@ author:
   - 'Markus Benning <ich@markusbenning.de>'
 build_requires:
   File::Find: 0
+  File::ReadBackwards: 0
+  File::Temp: 0
+  IO::File: 0
+  POSIX: 0
+  Template: 0
+  Test::BDD::Cucumber::Harness::TestBuilder: 0
+  Test::BDD::Cucumber::Loader: 0
   Test::Exception: 0
   Test::MockObject: 0
   Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.30
+  ExtUtils::MakeMaker: 0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -41,7 +48,7 @@ requires:
   Net::Server::PreFork: 0
   Tie::IxHash: 0
   Time::HiRes: 0
-  Time::Piece::MySQL: 0
+  Time::Piece: 0
   Time::Seconds: 0
   base: 0
   namespace::autoclean: 0
@@ -50,4 +57,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Mail-MtPolicyd
   repository: https://github.com/benningm/mtpolicyd
-version: 1.14
+version: 1.15

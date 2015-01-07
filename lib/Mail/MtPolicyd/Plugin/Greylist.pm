@@ -3,7 +3,7 @@ package Mail::MtPolicyd::Plugin::Greylist;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: mtpolicyd plugin for checking the client-address against an RBL
 
 extends 'Mail::MtPolicyd::Plugin';
@@ -11,9 +11,10 @@ with 'Mail::MtPolicyd::Plugin::Role::Scoring';
 with 'Mail::MtPolicyd::Plugin::Role::UserConfig' => {
 	'uc_attributes' => [ 'enabled' ],
 };
+with 'Mail::MtPolicyd::Plugin::Role::SqlUtils';
 
 use Mail::MtPolicyd::Plugin::Result;
-use Time::Piece::MySQL;
+use Time::Piece;
 use Time::Seconds;
 
 
@@ -126,7 +127,7 @@ sub is_autowl {
 	my $sender_domain = $self->_extract_sender_domain( $sender );
 
 	my ( $row ) = $r->do_cached('greylist-autowl-row', sub {
-		$self->get_autowl_row( $r, $sender_domain, $client_ip );
+		$self->get_autowl_row( $sender_domain, $client_ip );
 	} );
 
 	if( ! defined $row ) {
@@ -134,11 +135,12 @@ sub is_autowl {
 		return(0);
 	}
 
-	my $last_seen = Time::Piece->from_mysql_datetime($row->{'last_seen'});
-	my $expires = Time::Piece->new + ( ONE_DAY * $self->autowl_expire_days );
-	if( $last_seen > $expires ) {
+	my $last_seen = $row->{'last_seen'};
+	my $expires = $last_seen + ( ONE_DAY * $self->autowl_expire_days );
+    my $now = Time::Piece->new->epoch;
+	if( $now > $expires ) {
 		$self->log($r, 'removing expired autowl row');
-		$self->remove_autowl_row( $r, $sender_domain, $client_ip );
+		$self->remove_autowl_row( $sender_domain, $client_ip );
 		return(0);
 	}
 
@@ -148,7 +150,7 @@ sub is_autowl {
 	}
 
 	$self->log($r, 'client has valid autowl row. updating row');
-	$self->incr_autowl_row( $r, $sender_domain, $client_ip );
+	$self->incr_autowl_row( $sender_domain, $client_ip );
 	return(1);
 }
 
@@ -157,56 +159,61 @@ sub add_autowl {
 	my $sender_domain = $self->_extract_sender_domain( $sender );
 
 	my ( $row ) = $r->do_cached('greylist-autowl-row', sub {
-		$self->get_autowl_row( $r, $sender_domain, $client_ip );
+		$self->get_autowl_row( $sender_domain, $client_ip );
 	} );
 
 	if( defined $row ) {
 		$self->log($r, 'client already on autowl, just incrementing count');
-		$self->incr_autowl_row( $r, $sender_domain, $client_ip );
+		$self->incr_autowl_row( $sender_domain, $client_ip );
 		return;
 	}
 
 	$self->log($r, 'creating initial autowl entry');
-	$self->create_autowl_row( $r, $sender_domain, $client_ip );
+	$self->create_autowl_row( $sender_domain, $client_ip );
 	return;
 }
 
-sub execute_sql {
-	my ( $self, $r, $sql, @params ) = @_;
-	my $dbh = $r->server->get_dbh;
-	my $sth = $dbh->prepare( $sql );
-	$sth->execute( @params );
-	return $sth;
-}
-
-
 sub get_autowl_row {
-	my ( $self, $r, $sender_domain, $client_ip ) = @_;
+	my ( $self, $sender_domain, $client_ip ) = @_;
 	my $sql = sprintf("SELECT * FROM %s WHERE sender_domain=? AND client_ip=?",
        		$self->autowl_table );
-	return $self->execute_sql($r, $sql, $sender_domain, $client_ip)->fetchrow_hashref;
+	return $self->execute_sql($sql, $sender_domain, $client_ip)->fetchrow_hashref;
 }
 
 sub create_autowl_row {
-	my ( $self, $r, $sender_domain, $client_ip ) = @_;
-	my $sql = sprintf("INSERT INTO %s VALUES(NULL, ?, ?, 1, NULL)",
-       		$self->autowl_table );
-	$self->execute_sql($r, $sql, $sender_domain, $client_ip);
+	my ( $self, $sender_domain, $client_ip ) = @_;
+    my $timestamp = 
+	my $sql = sprintf("INSERT INTO %s VALUES(NULL, ?, ?, 1, %d)",
+       		$self->autowl_table, Time::Piece->new->epoch );
+	$self->execute_sql($sql, $sender_domain, $client_ip);
 	return;
 }
 
 sub incr_autowl_row {
-	my ( $self, $r, $sender_domain, $client_ip ) = @_;
-	my $sql = sprintf("UPDATE %s SET count=count+1 WHERE sender_domain=? AND client_ip=?",
-       		$self->autowl_table );
-	$self->execute_sql($r, $sql, $sender_domain, $client_ip);
+	my ( $self, $sender_domain, $client_ip ) = @_;
+	my $sql = sprintf(
+        "UPDATE %s SET count=count+1, last_seen=%d WHERE sender_domain=? AND client_ip=?",
+        $self->autowl_table,
+        Time::Piece->new->epoch );
+	$self->execute_sql($sql, $sender_domain, $client_ip);
 	return;
 }
+
 sub remove_autowl_row {
-	my ( $self, $r, $sender_domain, $client_ip ) = @_;
+	my ( $self, $sender_domain, $client_ip ) = @_;
 	my $sql = sprintf("DELETE FROM %s WHERE sender_domain=? AND client_ip=?",
        		$self->autowl_table );
-	$self->execute_sql($r, $sql, $sender_domain, $client_ip);
+	$self->execute_sql($sql, $sender_domain, $client_ip);
+	return;
+}
+
+sub expire_autowl_rows {
+	my ( $self ) = @_;
+	my $timeout = ONE_DAY * $self->autowl_expire_days;
+    my $now = Time::Piece->new->epoch;
+	my $sql = sprintf("DELETE FROM %s WHERE ? > last_seen + ?",
+       		$self->autowl_table );
+	$self->execute_sql($sql, $now, $timeout);
 	return;
 }
 
@@ -242,13 +249,59 @@ sub do_create_ticket {
 	return;
 }
 
+sub init {
+    my $self = shift;
+    if( $self->use_autowl ) {
+        $self->check_sql_tables( %{$self->_table_definitions} );
+    }
+}
+
+has '_table_definitions' => ( is => 'ro', isa => 'HashRef', lazy => 1,
+    default => sub { {
+        'autowl' => {
+            'mysql' => 'CREATE TABLE %TABLE_NAME% (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `sender_domain` VARCHAR(255) NOT NULL,
+    `client_ip` VARCHAR(39) NOT NULL,
+    `count` INT UNSIGNED NOT NULL,
+    `last_seen` INT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `domain_ip` (`client_ip`, `sender_domain`),
+    KEY(`client_ip`),
+    KEY(`sender_domain`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=latin1',
+            'SQLite' => 'CREATE TABLE %TABLE_NAME% (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `sender_domain` VARCHAR(255) NOT NULL,
+    `client_ip` VARCHAR(39) NOT NULL,
+    `count` INT UNSIGNED NOT NULL,
+    `last_seen` INTEGER NOT NULL
+)',
+        },
+    } },
+);
+
+sub cron {
+    my $self = shift;
+    my $server = shift;
+
+    if( grep { $_ eq 'hourly' } @_ ) {
+        $server->log(3, 'expiring greylist autowl...');
+        $self->expire_autowl_rows;
+    }
+
+    return;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -256,7 +309,7 @@ Mail::MtPolicyd::Plugin::Greylist - mtpolicyd plugin for checking the client-add
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 DESCRIPTION
 
@@ -368,22 +421,6 @@ This will prevent early retries from running thru all checks.
 
 =back
 
-=head1 AUTOWL TABLE CREATE SQL SCRIPT
-
-The following statement could be used to create the autowl table within a Maria/MySQL database:
-
-  CREATE TABLE `autowl` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `sender_domain` VARCHAR(255) NOT NULL,
-    `client_ip` VARCHAR(39) NOT NULL,
-    `count` INT UNSIGNED NOT NULL,
-    `last_seen` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `domain_ip` (`client_ip`, `sender_domain`),
-    KEY(`client_ip`),
-    KEY(`sender_domain`)
-  ) ENGINE=MyISAM  DEFAULT CHARSET=latin1
-
 =head1 AUTHOR
 
 Markus Benning <ich@markusbenning.de>
@@ -397,4 +434,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: commandline client to query a policyd server
 # PODNAME: policyd-client
 
@@ -13,9 +13,11 @@ use Mail::MtPolicyd::Client::App;
 my $app = Mail::MtPolicyd::Client::App->new_with_options();
 $app->run;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ policyd-client - commandline client to query a policyd server
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 DESCRIPTION
 
@@ -66,4 +68,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

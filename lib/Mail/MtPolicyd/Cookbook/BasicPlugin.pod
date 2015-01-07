@@ -1,9 +1,11 @@
 # PODNAME: Mail::MtPolicyd::Cookbook::BasicModule
 # ABSTRACT: how to write your own mtpolicyd plugin
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -11,7 +13,7 @@ Mail::MtPolicyd::Cookbook::BasicModule - how to write your own mtpolicyd plugin
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 How to write your own mtpolicyd plugin
 
@@ -116,4 +118,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

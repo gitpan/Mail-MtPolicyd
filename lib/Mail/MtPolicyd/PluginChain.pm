@@ -3,7 +3,7 @@ package Mail::MtPolicyd::PluginChain;
 use Moose;
 use namespace::autoclean;
 
-our $VERSION = '1.14'; # VERSION
+our $VERSION = '1.15'; # VERSION
 # ABSTRACT: class for a VirtualHost instance
 
 use Mail::MtPolicyd::Profiler;
@@ -55,6 +55,21 @@ sub run {
 	return $result;
 }
 
+sub cron {
+    my $self = shift;
+    my $server = shift;
+
+    foreach my $plugin ( @{$self->plugins} ) {
+        $server->log(3, 'running cron for plugin '.$plugin->name);
+        eval { $plugin->cron( $server, @_ ); };
+        my $e = $@;
+        if( $e ) {
+            $server->log(0, 'plugin '.$plugin->name.' failed in cron: '.$e );
+        }
+    }
+	return;
+}
+
 sub load_plugin {
 	my ( $self, $plugin_name, $params ) = @_;
 	if( ! defined $params->{'module'} ) {
@@ -67,19 +82,20 @@ sub load_plugin {
 	my $code = "require ".$plugin_class.";";
 	eval $code; ## no critic (ProhibitStringyEval)
 	if($@) {
-		die('could not load module '.$module.' for plugin '.$plugin_name.': '.$@);
-        }
+        die('could not load module '.$module.' for plugin '.$plugin_name.': '.$@);
+    }
 
 	eval {
-                $plugin = $plugin_class->new(
-			name => $plugin_name,
-			vhost_name => $self->vhost_name,
-			%$params,
-		);
-        };
-        if($@) {
-		die('could not initialize plugin '.$plugin_name.': '.$@);
-        }
+        $plugin = $plugin_class->new(
+            name => $plugin_name,
+            vhost_name => $self->vhost_name,
+            %$params,
+        );
+        $plugin->init();
+    };
+    if($@) {
+        die('could not initialize plugin '.$plugin_name.': '.$@);
+    }
 	$self->add_plugin($plugin);
 	return;
 }
@@ -109,9 +125,11 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -119,7 +137,7 @@ Mail::MtPolicyd::PluginChain - class for a VirtualHost instance
 
 =head1 VERSION
 
-version 1.14
+version 1.15
 
 =head1 AUTHOR
 
@@ -134,4 +152,3 @@ This is free software, licensed under:
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

@@ -1,7 +1,7 @@
 %define module_name Mail-MtPolicyd
 
 Name: mtpolicyd
-Version: 1.14
+Version: 1.15
 Release: %(date +%Y%m%d)%{dist}
 Summary: a modular policy daemon for postfix
 
@@ -20,7 +20,7 @@ Source0: %{module_name}-%{version}.tar.gz
 # only require core dependencies
 AutoReq: 0
 Requires: perl(Cache::Memcached), perl(Config::General), perl(Moose), perl(Tie::IxHash), perl(Time::HiRes), perl(DBI), perl(Mail::RBL), perl(JSON), perl(MooseX::Singleton)
-BuildRequires: perl, perl(ExtUtils::MakeMaker)
+BuildRequires: perl, perl(ExtUtils::MakeMaker), perl(Test::BDD::Cucumber), perl(File::ReadBackwards)
 
 Requires(pre): /usr/sbin/useradd, /usr/sbin/groupadd
 
@@ -47,10 +47,12 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}/init.d"
 mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}/mtpolicyd"
+mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}/cron.d"
 mkdir -p "$RPM_BUILD_ROOT/var/run/mtpolicyd"
 
 install -m755 rpm/mtpolicyd.init-redhat "$RPM_BUILD_ROOT/%{_sysconfdir}/init.d/mtpolicyd"
 install -m640 etc/mtpolicyd.conf "$RPM_BUILD_ROOT/%{_sysconfdir}/mtpolicyd/mtpolicyd.conf"
+install -m640 etc/mtpolicyd.crontab "$RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/mtpolicyd"
 
 %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -88,6 +90,7 @@ fi
 %attr(755,root,root) %{_bindir}/policyd-client
 %attr(755,root,root) %{_sysconfdir}/init.d/mtpolicyd
 %attr(640,root,mtpolicyd) %config(noreplace) %{_sysconfdir}/mtpolicyd/mtpolicyd.conf
+%attr(640,root,root) %{_sysconfdir}/cron.d/mtpolicyd
 %attr(750,mtpolicyd,mtpolicyd) %dir /var/run/mtpolicyd
 %{perl_vendorlib}
 %{_mandir}/man1/*
